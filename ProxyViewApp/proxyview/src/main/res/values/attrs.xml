@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ProxyView">
+        <attr name="lib_proxy_view_style" format="reference"/>
+        <attr name="lib_proxy_view_class" format="string|reference"/>
+    </declare-styleable>
+</resources>
