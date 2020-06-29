@@ -68,6 +68,7 @@ public class ProxyView extends View implements ProxyViewDelegate<AbsView> {
         }
         this.mView = view;
         requestLayout();
+        invalidate();
     }
     public void applyMeasuredWidthHeight(int measureWidth, int measureHeight){
         super.setMeasuredDimension(measureWidth, measureHeight);

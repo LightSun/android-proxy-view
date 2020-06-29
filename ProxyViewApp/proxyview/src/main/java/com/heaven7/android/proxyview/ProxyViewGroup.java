@@ -68,6 +68,7 @@ public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsVi
         }
         this.mView = view;
         requestLayout();
+        invalidate();
     }
     public void applyMeasuredWidthHeight(int measureWidth, int measureHeight){
         super.setMeasuredDimension(measureWidth, measureHeight);
