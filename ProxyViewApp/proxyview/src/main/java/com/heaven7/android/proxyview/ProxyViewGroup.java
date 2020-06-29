@@ -150,11 +150,11 @@ public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsVi
     }
     @Override
     public int getSuggestedMinimumWidth() {
-        return super.getSuggestedMinimumWidth();
+        return mView.getSuggestedMinimumWidth(super.getSuggestedMinimumWidth());
     }
     @Override
     public int getSuggestedMinimumHeight() {
-        return super.getSuggestedMinimumHeight();
+        return mView.getSuggestedMinimumHeight(super.getSuggestedMinimumHeight());
     }
     //------------------------------------------------
     public boolean shouldDelayChildPressedState() {
@@ -218,11 +218,13 @@ public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsVi
 
         public LayoutParams(Context c, AttributeSet attrs, AbsViewGroup view) {
             super(c, attrs);
-            TypedArray ta = c.obtainStyledAttributes(attrs, view.getLayoutStyleId());
-            try {
-                parameter = view.createLayoutParameter(ta);
-            }finally {
-                ta.recycle();
+            if(view.getLayoutStyleId() != null){
+                TypedArray ta = c.obtainStyledAttributes(attrs, view.getLayoutStyleId());
+                try {
+                    parameter = view.createLayoutParameter(ta);
+                }finally {
+                    ta.recycle();
+                }
             }
         }
         public LayoutParams(int width, int height, Parcelable p) {
