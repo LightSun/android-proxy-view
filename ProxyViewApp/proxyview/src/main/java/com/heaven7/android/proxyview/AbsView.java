@@ -82,6 +82,11 @@ public abstract class AbsView<P extends Parcelable> {
 
     /**
      * the styled id often used for {@linkplain Context#obtainStyledAttributes(AttributeSet, int[])}.
+     * like: <pre>
+     *      <declare-styleable name="FrameLayout">
+     *         <attr name="measureAllChildren" format="boolean" />
+     *     </declare-styleable>
+     * </pre>
      * @return the style id
      */
     public abstract int[] getStyleId();
