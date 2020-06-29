@@ -113,7 +113,6 @@ public class ProxyView extends View implements ProxyViewDelegate<AbsView> {
     }
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         mView.onDraw(canvas);
     }
     @Override

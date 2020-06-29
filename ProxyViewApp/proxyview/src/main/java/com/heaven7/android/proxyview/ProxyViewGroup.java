@@ -132,7 +132,6 @@ public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsVi
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         mView.onDraw(canvas);
     }
     @Override
