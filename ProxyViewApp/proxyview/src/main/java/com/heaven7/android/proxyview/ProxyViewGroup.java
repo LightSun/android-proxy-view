@@ -143,7 +143,7 @@ public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsVi
 
     @Override
     protected void onDetachedFromWindow() {
-        mView.onDestroy();
+        mView.onDetachedFromWindow();
         super.onDetachedFromWindow();
     }
     @Override

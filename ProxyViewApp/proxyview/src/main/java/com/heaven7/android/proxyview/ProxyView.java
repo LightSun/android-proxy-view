@@ -124,9 +124,15 @@ public class ProxyView extends View implements ProxyViewDelegate<AbsView> {
     }
     @Override
     protected void onDetachedFromWindow() {
-        mView.onDestroy();
+        mView.onDetachedFromWindow();
         super.onDetachedFromWindow();
     }
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        mView.onAttachToWindow();
+    }
+
     @Override
     public int getSuggestedMinimumWidth() {
         return super.getSuggestedMinimumWidth();

@@ -23,7 +23,7 @@ public abstract class AbsView<P extends Parcelable> {
     private P parameter;
 
     public AbsView(View proxyView) {
-        if(!(proxyView instanceof ProxyView) && !(proxyView instanceof ProxyViewGroup)){
+        if (!(proxyView instanceof ProxyView) && !(proxyView instanceof ProxyViewGroup)) {
             throw new IllegalStateException("proxy view must be ProxyView or ProxyViewGroup.");
         }
         this.proxyView = proxyView;
@@ -59,21 +59,26 @@ public abstract class AbsView<P extends Parcelable> {
 
     /**
      * get the parameter of content view
+     *
      * @return the parameter
      */
     public P getParameter() {
         return parameter;
     }
     //you should refresh ui on here
+
     /**
-     * set the parameter. this can be called from {@linkplain View#onRestoreInstanceState(Parcelable)} so you should refresh ui here.
+     * set the parameter. this can be called from 'View#onRestoreInstanceState(Parcelable)' so you should refresh ui here.
+     *
      * @param parameter the parameter
      */
     public void setParameter(P parameter) {
         this.parameter = parameter;
     }
+
     /**
      * call this to initialize
+     *
      * @param ta the type array. may be null
      */
     public void attach(TypedArray ta) {
@@ -87,12 +92,14 @@ public abstract class AbsView<P extends Parcelable> {
      *         <attr name="measureAllChildren" format="boolean" />
      *     </declare-styleable>
      * </pre>
+     *
      * @return the style id
      */
     public abstract int[] getStyleId();
 
     /**
      * called by {@linkplain #attach(TypedArray)}
+     *
      * @param ta the type array
      * @return the parameter
      */
@@ -101,20 +108,28 @@ public abstract class AbsView<P extends Parcelable> {
     /**
      * called on destroy content view
      */
-    public void onDestroy() {
+    public void onDetachedFromWindow() {
+
+    }
+
+    /**
+     * called on attach to window
+     */
+    public void onAttachToWindow() {
 
     }
 
     /**
      * called on detach this
      */
-    public void onDetach(){
+    public void onDetach() {
 
     }
     //--------------------------------------
 
     /**
      * called on draw
+     *
      * @param canvas the canvas
      */
     public void onDraw(Canvas canvas) {
@@ -123,13 +138,16 @@ public abstract class AbsView<P extends Parcelable> {
 
     /**
      * called before dispatch draw
+     *
      * @param canvas the canvas
      */
     public void onPreDispatchDraw(Canvas canvas) {
 
     }
+
     /**
      * called after dispatch draw
+     *
      * @param canvas the canvas
      */
     public void onPostDispatchDraw(Canvas canvas) {
@@ -138,6 +156,7 @@ public abstract class AbsView<P extends Parcelable> {
 
     /**
      * called on touch
+     *
      * @param event the event
      * @return true if touch handled
      */
@@ -147,7 +166,8 @@ public abstract class AbsView<P extends Parcelable> {
 
     /**
      * called on measure
-     * @param widthMeasureSpec the width measure spec
+     *
+     * @param widthMeasureSpec  the width measure spec
      * @param heightMeasureSpec the height measure spec
      */
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -160,15 +180,16 @@ public abstract class AbsView<P extends Parcelable> {
     /**
      * Called from layout when this view should
      * assign a size and position to each of its children.
-     *
+     * <p>
      * Derived classes with children should override
      * this method and call layout on each of
      * their children.
+     *
      * @param changed This is a new size or position for this view
-     * @param left Left position, relative to parent
-     * @param top Top position, relative to parent
-     * @param right Right position, relative to parent
-     * @param bottom Bottom position, relative to parent
+     * @param left    Left position, relative to parent
+     * @param top     Top position, relative to parent
+     * @param right   Right position, relative to parent
+     * @param bottom  Bottom position, relative to parent
      */
     public void onLayout(boolean changed, int left, int top, int right, int bottom) {
 
@@ -179,8 +200,8 @@ public abstract class AbsView<P extends Parcelable> {
      * you were just added to the view hierarchy, you're called with the old
      * values of 0.
      *
-     * @param w Current width of this view.
-     * @param h Current height of this view.
+     * @param w    Current width of this view.
+     * @param h    Current height of this view.
      * @param oldw Old width of this view.
      * @param oldh Old height of this view.
      */
@@ -204,29 +225,35 @@ public abstract class AbsView<P extends Parcelable> {
     public void requestLayout() {
 
     }
+
     //---------------------------------------------
     public boolean setForegroundGravity(int foregroundGravity) {
         return false;
     }
-    public CharSequence getAccessibilityClassName(){
+
+    public CharSequence getAccessibilityClassName() {
         return getClass().getName();
     }
 
     public int getBaseline() {
         return -1;
     }
+
     public void onRtlPropertiesChanged(int layoutDirection) {
 
     }
 
     //--------------- internal ----------------------
+
     /**
      * get the parameter class
+     *
      * @return the parameter class
      */
-    public Class<?> getParameterClass(){
+    public Class<?> getParameterClass() {
         return getSuperclassTypeParameter(getClass(), 0);
     }
+
     static Class<?> getSuperclassTypeParameter(Class<?> subclass, int index) {
         Type superclass = subclass.getGenericSuperclass();
         if (superclass instanceof Class) {
