@@ -1,6 +1,7 @@
 package com.heaven7.android.proxyview;
 
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.os.Parcelable;
 import android.view.MotionEvent;
 import android.view.View;
@@ -100,6 +101,16 @@ public abstract class AbsViewGroup<P extends Parcelable, LP extends Parcelable> 
     public ViewGroup.LayoutParams generateDefaultLayoutParams() {
         return null;
     }
+    public void setOnHierarchyChangeListener(ViewGroup.OnHierarchyChangeListener listener, Runnable defaultSet) {
+        defaultSet.run();
+    }
+    public void requestDisallowInterceptTouchEvent(boolean disallowIntercept, Runnable superRun){
+        superRun.run();
+    }
+    public boolean requestChildRectangleOnScreen(View child, Rect rect, boolean immediate) {
+        return false;
+    }
+
     //------------------ internal ----------------------
 
     public Class<?> getLayoutParameterClass(){

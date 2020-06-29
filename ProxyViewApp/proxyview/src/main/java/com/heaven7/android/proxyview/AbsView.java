@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -81,7 +82,7 @@ public abstract class AbsView<P extends Parcelable> {
      *
      * @param ta the type array. may be null
      */
-    public void attach(TypedArray ta) {
+    public void onInitialize(TypedArray ta) {
         parameter = onCreate(ta);
     }
 
@@ -98,7 +99,7 @@ public abstract class AbsView<P extends Parcelable> {
     public abstract int[] getStyleId();
 
     /**
-     * called by {@linkplain #attach(TypedArray)}
+     * called by {@linkplain #onInitialize(TypedArray)}
      *
      * @param ta the type array
      * @return the parameter
@@ -226,7 +227,19 @@ public abstract class AbsView<P extends Parcelable> {
 
     }
 
+    public void setVisibility(int visibility) {
+
+    }
     //---------------------------------------------
+    public int getSuggestedMinimumWidth(int superResult) {
+        return superResult;
+    }
+    public int getSuggestedMinimumHeight(int superResult) {
+        return superResult;
+    }
+    public void setFitsSystemWindows(boolean fitSystemWindows) {
+
+    }
     public boolean setForegroundGravity(int foregroundGravity) {
         return false;
     }
@@ -242,7 +255,12 @@ public abstract class AbsView<P extends Parcelable> {
     public void onRtlPropertiesChanged(int layoutDirection) {
 
     }
+    public void drawableStateChanged() {
 
+    }
+    public boolean verifyDrawable(Drawable who, boolean superResult) {
+        return superResult;
+    }
     //--------------- internal ----------------------
 
     /**
@@ -262,4 +280,5 @@ public abstract class AbsView<P extends Parcelable> {
         ParameterizedType parameterized = (ParameterizedType) superclass;
         return (Class<?>) parameterized.getActualTypeArguments()[index];
     }
+
 }

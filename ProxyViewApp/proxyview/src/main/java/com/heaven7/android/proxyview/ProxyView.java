@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -39,13 +40,13 @@ public class ProxyView extends View implements ProxyViewDelegate<AbsView> {
                 if (ap != 0) {
                     TypedArray a2 = context.obtainStyledAttributes(ap, mView.getStyleId());
                     try {
-                        mView.attach(a2);
+                        mView.onInitialize(a2);
                     }finally {
                         a2.recycle();
                     }
                 }
             }else {
-                mView.attach(null);
+                mView.onInitialize(null);
             }
         }catch (Exception e){
             throw new RuntimeException(e);
@@ -135,22 +136,33 @@ public class ProxyView extends View implements ProxyViewDelegate<AbsView> {
 
     @Override
     public int getSuggestedMinimumWidth() {
-        return super.getSuggestedMinimumWidth();
+        return mView.getSuggestedMinimumWidth(super.getSuggestedMinimumWidth());
     }
     @Override
     public int getSuggestedMinimumHeight() {
-        return super.getSuggestedMinimumHeight();
+        return mView.getSuggestedMinimumHeight(super.getSuggestedMinimumHeight());
     }
     public void requestLayout(){
         super.requestLayout();
         mView.requestLayout();
     }
+    @Override
+    public void setVisibility(int visibility) {
+        super.setVisibility(visibility);
+        mView.setVisibility(visibility);
+    }
+
     //-------------------------- use less -------------------
+    public void setFitsSystemWindows(boolean fitSystemWindows) {
+        super.setFitsSystemWindows(fitSystemWindows);
+        mView.setFitsSystemWindows(fitSystemWindows);
+    }
     public void setForegroundGravity(int foregroundGravity){
         if(!mView.setForegroundGravity(foregroundGravity)){
             super.setForegroundGravity(foregroundGravity);
         }
     }
+
     @Override
     public CharSequence getAccessibilityClassName() {
         return mView.getAccessibilityClassName();
@@ -160,5 +172,13 @@ public class ProxyView extends View implements ProxyViewDelegate<AbsView> {
     }
     public void onRtlPropertiesChanged(int layoutDirection){
         mView.onRtlPropertiesChanged(layoutDirection);
+    }
+    public void drawableStateChanged() {
+        super.drawableStateChanged();
+        mView.drawableStateChanged();
+    }
+    @Override
+    protected boolean verifyDrawable(Drawable who) {
+        return mView.verifyDrawable(who, super.verifyDrawable(who));
     }
 }

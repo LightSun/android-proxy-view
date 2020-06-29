@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 
 public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsViewGroup> {
@@ -39,13 +41,13 @@ public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsVi
                 if (ap != 0) {
                     TypedArray a2 = context.obtainStyledAttributes(ap, mView.getStyleId());
                     try {
-                        mView.attach(a2);
+                        mView.onInitialize(a2);
                     }finally {
                         a2.recycle();
                     }
                 }
             }else {
-                mView.attach(null);
+                mView.onInitialize(null);
             }
         }catch (Exception e){
             throw new RuntimeException(e);
@@ -155,7 +157,6 @@ public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsVi
         return super.getSuggestedMinimumHeight();
     }
     //------------------------------------------------
-
     public boolean shouldDelayChildPressedState() {
         return mView.shouldDelayChildPressedState();
     }
@@ -186,6 +187,27 @@ public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsVi
     protected ViewGroup.LayoutParams generateDefaultLayoutParams() {
         ViewGroup.LayoutParams lp = mView.generateDefaultLayoutParams();
         return lp != null ? lp : super.generateDefaultLayoutParams();
+    }
+    @Override
+    public void setOnHierarchyChangeListener(final OnHierarchyChangeListener listener) {
+        mView.setOnHierarchyChangeListener(listener, new Runnable(){
+            @Override
+            public void run() {
+                ProxyViewGroup.super.setOnHierarchyChangeListener(listener);
+            }
+        });
+    }
+    @Override
+    public void requestDisallowInterceptTouchEvent(final boolean disallowIntercept) {
+        mView.requestDisallowInterceptTouchEvent(disallowIntercept, new Runnable() {
+            @Override
+            public void run() {
+                ProxyViewGroup.super.requestDisallowInterceptTouchEvent(disallowIntercept);
+            }
+        });
+    }
+    public boolean requestChildRectangleOnScreen(View child, Rect rect, boolean immediate){
+        return mView.requestChildRectangleOnScreen(child, rect, immediate);
     }
     /**
      * the layout parameter of proxy-viewgroup
