@@ -134,4 +134,24 @@ public class ProxyView extends View implements ProxyViewDelegate<AbsView> {
     public int getSuggestedMinimumHeight() {
         return super.getSuggestedMinimumHeight();
     }
+    public void requestLayout(){
+        super.requestLayout();
+        mView.requestLayout();
+    }
+    //-------------------------- use less -------------------
+    public void setForegroundGravity(int foregroundGravity){
+        if(!mView.setForegroundGravity(foregroundGravity)){
+            super.setForegroundGravity(foregroundGravity);
+        }
+    }
+    @Override
+    public CharSequence getAccessibilityClassName() {
+        return mView.getAccessibilityClassName();
+    }
+    public int getBaseline(){
+        return mView.getBaseline();
+    }
+    public void onRtlPropertiesChanged(int layoutDirection){
+        mView.onRtlPropertiesChanged(layoutDirection);
+    }
 }

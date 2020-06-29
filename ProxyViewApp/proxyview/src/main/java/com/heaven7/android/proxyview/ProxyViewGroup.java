@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 
 public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsViewGroup> {
@@ -153,5 +152,19 @@ public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsVi
     @Override
     public int getSuggestedMinimumHeight() {
         return super.getSuggestedMinimumHeight();
+    }
+    //------------------------------------------------
+
+    public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return mView.generateLayoutParams(attrs);
+    }
+    protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+        return mView.generateLayoutParams(p);
+    }
+    public boolean shouldDelayChildPressedState() {
+        return mView.shouldDelayChildPressedState();
+    }
+    protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
+        return mView.checkLayoutParams(p);
     }
 }

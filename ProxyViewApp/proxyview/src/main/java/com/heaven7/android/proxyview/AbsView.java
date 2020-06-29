@@ -179,4 +179,21 @@ public abstract class AbsView<P extends Parcelable> {
     public void onConfigurationChanged(Configuration newConfig) {
     }
 
+    public void requestLayout() {
+
+    }
+    //---------------------------------------------
+    public boolean setForegroundGravity(int foregroundGravity) {
+        return false;
+    }
+    public CharSequence getAccessibilityClassName(){
+        return getClass().getName();
+    }
+
+    public int getBaseline() {
+        return -1;
+    }
+    public void onRtlPropertiesChanged(int layoutDirection) {
+
+    }
 }
