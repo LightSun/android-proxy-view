@@ -10,6 +10,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 /**
  * the content view of {@linkplain ProxyView}
  * @param <P> the parameter type
@@ -150,31 +153,45 @@ public abstract class AbsView<P extends Parcelable> {
     }
 
     /**
-     * called on layout
-     * @param changed true if changed
-     * @param left the left
-     * @param top the top
-     * @param right the right
-     * @param bottom the bottom
+     * Called from layout when this view should
+     * assign a size and position to each of its children.
+     *
+     * Derived classes with children should override
+     * this method and call layout on each of
+     * their children.
+     * @param changed This is a new size or position for this view
+     * @param left Left position, relative to parent
+     * @param top Top position, relative to parent
+     * @param right Right position, relative to parent
+     * @param bottom Bottom position, relative to parent
      */
     public void onLayout(boolean changed, int left, int top, int right, int bottom) {
 
     }
 
     /**
-     * called on size changed
-     * @param w the new width
-     * @param h the new height
-     * @param oldw the old width
-     * @param oldh the old height
+     * This is called during layout when the size of this view has changed. If
+     * you were just added to the view hierarchy, you're called with the old
+     * values of 0.
+     *
+     * @param w Current width of this view.
+     * @param h Current height of this view.
+     * @param oldw Old width of this view.
+     * @param oldh Old height of this view.
      */
     public void onSizeChanged(int w, int h, int oldw, int oldh) {
 
     }
 
     /**
-     * called on configuration changed
-     * @param newConfig the config
+     * Called when the current configuration of the resources being used
+     * by the application have changed.  You can use this to decide when
+     * to reload resources that can changed based on orientation and other
+     * configuration characteristics.  You only need to use this if you are
+     * not relying on the normal {@link android.app.Activity} mechanism of
+     * recreating the activity instance upon a configuration change.
+     *
+     * @param newConfig The new resource configuration.
      */
     public void onConfigurationChanged(Configuration newConfig) {
     }
@@ -195,5 +212,22 @@ public abstract class AbsView<P extends Parcelable> {
     }
     public void onRtlPropertiesChanged(int layoutDirection) {
 
+    }
+
+    //--------------- internal ----------------------
+    /**
+     * get the parameter class
+     * @return the parameter class
+     */
+    public Class<?> getParameterClass(){
+        return getSuperclassTypeParameter(getClass(), 0);
+    }
+    static Class<?> getSuperclassTypeParameter(Class<?> subclass, int index) {
+        Type superclass = subclass.getGenericSuperclass();
+        if (superclass instanceof Class) {
+            throw new RuntimeException("Missing type parameter.");
+        }
+        ParameterizedType parameterized = (ParameterizedType) superclass;
+        return (Class<?>) parameterized.getActualTypeArguments()[index];
     }
 }

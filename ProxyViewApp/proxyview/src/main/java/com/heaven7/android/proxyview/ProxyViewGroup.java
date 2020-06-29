@@ -155,16 +155,66 @@ public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsVi
     }
     //------------------------------------------------
 
-    public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
-        return mView.generateLayoutParams(attrs);
-    }
-    protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
-        return mView.generateLayoutParams(p);
-    }
     public boolean shouldDelayChildPressedState() {
         return mView.shouldDelayChildPressedState();
     }
+    public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return new LayoutParams(getContext(), attrs, mView);
+    }
+    protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
+        if(p instanceof LayoutParams){
+            return new LayoutParams((LayoutParams)p);
+        }else if(p instanceof MarginLayoutParams){
+            return new LayoutParams((MarginLayoutParams)p);
+        }
+        return new LayoutParams(p);
+    }
     protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
-        return mView.checkLayoutParams(p);
+        if(mView.checkLayoutParams(p)){
+            return true;
+        }
+        if(p instanceof LayoutParams){
+            Parcelable pa = ((LayoutParams) p).parameter;
+            if(pa != null){
+                return mView.getLayoutParameterClass().isAssignableFrom(pa.getClass());
+            }
+        }
+        return super.checkLayoutParams(p);
+    }
+    @Override
+    protected ViewGroup.LayoutParams generateDefaultLayoutParams() {
+        ViewGroup.LayoutParams lp = mView.generateDefaultLayoutParams();
+        return lp != null ? lp : super.generateDefaultLayoutParams();
+    }
+    /**
+     * the layout parameter of proxy-viewgroup
+     */
+    public static class LayoutParams extends MarginLayoutParams{
+
+        public Parcelable parameter;
+
+        public LayoutParams(Context c, AttributeSet attrs, AbsViewGroup view) {
+            super(c, attrs);
+            TypedArray ta = c.obtainStyledAttributes(attrs, view.getLayoutStyleId());
+            try {
+                parameter = view.createLayoutParameter(ta);
+            }finally {
+                ta.recycle();
+            }
+        }
+        public LayoutParams(int width, int height, Parcelable p) {
+            super(width, height);
+            this.parameter = p;
+        }
+        public LayoutParams(MarginLayoutParams source) {
+            super(source);
+        }
+        public LayoutParams(ViewGroup.LayoutParams source) {
+            super(source);
+        }
+        public LayoutParams(LayoutParams source) {
+            super(source);
+            this.parameter = source.parameter;
+        }
     }
 }
