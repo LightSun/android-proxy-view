@@ -31,7 +31,7 @@ public abstract class AbsView<P extends Parcelable> {
     }
 
     /**
-     * get the attr id from android system. which often generate R as 'com.android.internal.R'
+     * get the attr id from android system. which often generated attr in 'com.android.internal.R'
      * @param name the resource name
      * @return the attr id.
      */
