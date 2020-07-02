@@ -36,14 +36,17 @@ public class ProxyView extends View implements ProxyViewDelegate<AbsView> {
             String cn = a.getString(R.styleable.ProxyView_lib_proxy_view_class);
             mView = (AbsView) Class.forName(cn).getConstructor(View.class).newInstance(this);
             if(mView.getStyleId() != null){
-                final int ap = a.getResourceId(R.styleable.ProxyView_lib_proxy_view_style, 0);
+                final int ap = AbsView.getSystemAttrId("style");
+                TypedArray a2;
                 if (ap != 0) {
-                    TypedArray a2 = context.obtainStyledAttributes(ap, mView.getStyleId());
-                    try {
-                        mView.onInitialize(a2);
-                    }finally {
-                        a2.recycle();
-                    }
+                    a2 = context.obtainStyledAttributes(ap, mView.getStyleId());
+                }else {
+                    a2 = context.obtainStyledAttributes(attrs, mView.getStyleId());
+                }
+                try {
+                    mView.onInitialize(a2);
+                }finally {
+                    a2.recycle();
                 }
             }else {
                 mView.onInitialize(null);

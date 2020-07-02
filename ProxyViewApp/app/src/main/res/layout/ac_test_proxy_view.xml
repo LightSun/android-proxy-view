@@ -5,12 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Small"
+        />
 
     <com.heaven7.android.proxyview.ProxyView
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:lib_proxy_view_class="com.heaven7.android.proxyview.app.TestView"
-        app:lib_proxy_view_style="@style/common_testView"
+        style="@style/common_testView"
         />
+    <!-- app:lib_proxy_view_style="@style/common_linear"   app:lib_proxy_view_style="@style/common_testView" -->
+    <com.heaven7.android.proxyview.ProxyViewGroup
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:lib_proxy_view_class="com.heaven7.android.proxyview.app.LinearView"
+        android:orientation="vertical"
+        >
+
+    </com.heaven7.android.proxyview.ProxyViewGroup>
 
 </LinearLayout>

@@ -11,4 +11,8 @@
     <style name="common_testView">
         <item name="test_view_color">@color/colorAccent</item>
     </style>
+
+    <style name="common_linear">
+        <item name="android:orientation">vertical</item>
+    </style>
 </resources>

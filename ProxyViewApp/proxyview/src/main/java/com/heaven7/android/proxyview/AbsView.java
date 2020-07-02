@@ -30,6 +30,15 @@ public abstract class AbsView<P extends Parcelable> {
         this.proxyView = proxyView;
     }
 
+    /**
+     * get the attr id from android system. which often generate R as 'com.android.internal.R'
+     * @param name the resource name
+     * @return the attr id.
+     */
+    public static int getSystemAttrId(String name){
+        return Resources.getSystem().getIdentifier(name, "attr", "android");
+    }
+
     public View getProxyView() {
         return proxyView;
     }

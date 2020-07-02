@@ -32,19 +32,23 @@ public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsVi
         if(attrs == null){
             throw new IllegalStateException();
         }
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ProxyView);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ProxyViewGroup);
         try {
-            String cn = a.getString(R.styleable.ProxyView_lib_proxy_view_class);
+            String cn = a.getString(R.styleable.ProxyViewGroup_lib_proxy_view_class);
             mView = (AbsViewGroup) Class.forName(cn).getConstructor(ViewGroup.class).newInstance(this);
             if(mView.getStyleId() != null){
-                final int ap = a.getResourceId(R.styleable.ProxyView_lib_proxy_view_style, 0);
+                //final int ap = a.getResourceId(R.styleable.ProxyView_lib_proxy_view_style, 0);
+                final int ap = AbsView.getSystemAttrId("style");
+                TypedArray a2;
                 if (ap != 0) {
-                    TypedArray a2 = context.obtainStyledAttributes(ap, mView.getStyleId());
-                    try {
-                        mView.onInitialize(a2);
-                    }finally {
-                        a2.recycle();
-                    }
+                    a2 = context.obtainStyledAttributes(ap, mView.getStyleId());
+                }else {
+                    a2 = context.obtainStyledAttributes(attrs, mView.getStyleId());
+                }
+                try {
+                    mView.onInitialize(a2);
+                }finally {
+                    a2.recycle();
                 }
             }else {
                 mView.onInitialize(null);
@@ -221,7 +225,7 @@ public class ProxyViewGroup extends ViewGroup implements ProxyViewDelegate<AbsVi
             if(view.getLayoutStyleId() != null){
                 TypedArray ta = c.obtainStyledAttributes(attrs, view.getLayoutStyleId());
                 try {
-                    parameter = view.createLayoutParameter(ta);
+                    parameter = view.onCreateLayoutParameter(ta);
                 }finally {
                     ta.recycle();
                 }

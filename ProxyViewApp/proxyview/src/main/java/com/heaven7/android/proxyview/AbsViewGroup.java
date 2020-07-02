@@ -42,7 +42,7 @@ public abstract class AbsViewGroup<P extends Parcelable, LP extends Parcelable> 
      * @return the layout parameter
      * @see #getLayoutStyleId()
      */
-    public LP createLayoutParameter(TypedArray ta) {
+    public LP onCreateLayoutParameter(TypedArray ta) {
        return null;
     }
 
