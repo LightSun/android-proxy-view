@@ -59,12 +59,15 @@ public abstract class AbsView<P extends Parcelable> {
         getProxyView().postInvalidate();
     }
 
-    public void post(Runnable task) {
-        getProxyView().post(task);
+    public boolean post(Runnable task) {
+        return getProxyView().post(task);
     }
 
-    public void postDelayed(Runnable action, long delayMillis) {
-        getProxyView().postDelayed(action, delayMillis);
+    public boolean postDelayed(Runnable action, long delayMillis) {
+        return getProxyView().postDelayed(action, delayMillis);
+    }
+    public void removeCallbacks(Runnable task){
+        getProxyView().removeCallbacks(task);
     }
 
     /**
