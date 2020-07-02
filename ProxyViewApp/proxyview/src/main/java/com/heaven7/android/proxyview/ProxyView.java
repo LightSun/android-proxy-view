@@ -39,6 +39,7 @@ public class ProxyView extends View implements ProxyViewDelegate<AbsView> {
                 final int ap = AbsView.getSystemAttrId("style");
                 TypedArray a2;
                 if (ap != 0) {
+                    //when have style . it will merge other attrs. after call this
                     a2 = context.obtainStyledAttributes(ap, mView.getStyleId());
                 }else {
                     a2 = context.obtainStyledAttributes(attrs, mView.getStyleId());

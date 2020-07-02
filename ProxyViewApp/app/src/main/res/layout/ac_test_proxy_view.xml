@@ -16,6 +16,7 @@
         android:layout_height="200dp"
         app:lib_proxy_view_class="com.heaven7.android.proxyview.app.TestView"
         style="@style/common_testView"
+        app:test_view_color="#ff0000"
         />
     <!-- app:lib_proxy_view_style="@style/common_linear"   app:lib_proxy_view_style="@style/common_testView" -->
     <com.heaven7.android.proxyview.ProxyViewGroup
